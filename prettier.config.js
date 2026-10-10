@@ -2,9 +2,12 @@
 
 /** @type {import('prettier').Config} */
 const config = {
-  semi: false,
+  tabWidth: 4,
+  trailingComma: 'es5',
   singleQuote: true,
-  trailingComma: "all",
-};
+  jsxSingleQuote: true,
+  printWidth: 100,
+  plugins: ['prettier-plugin-tailwindcss'],
+}
 
-export default config;
+export default config
