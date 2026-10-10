@@ -1,7 +1,7 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import { db } from '#/db/index';
 import { desc } from 'drizzle-orm';
+import { db } from '#/db/index';
 import { todos } from '#/db/schema';
 
 const getTodos = createServerFn({
@@ -51,7 +51,7 @@ function DemoDrizzle() {
             <section className='demo-panel w-full max-w-2xl'>
                 <header className='mb-8 flex items-center gap-4'>
                     <span className='demo-card flex h-14 w-14 items-center justify-center p-3'>
-                        <img src='/drizzle.svg' alt='Drizzle Logo' className='h-8 w-8' />
+                        <img alt='Drizzle Logo' className='h-8 w-8' src='/drizzle.svg' />
                     </span>
                     <div>
                         <p className='island-kicker mb-2'>Database</p>
@@ -77,14 +77,14 @@ function DemoDrizzle() {
                     )}
                 </ul>
 
-                <form onSubmit={handleSubmit} className='flex flex-col gap-2 sm:flex-row'>
+                <form className='flex flex-col gap-2 sm:flex-row' onSubmit={handleSubmit}>
                     <input
-                        type='text'
+                        className='demo-input min-w-0 flex-1'
                         name='title'
                         placeholder='Add a new todo...'
-                        className='demo-input min-w-0 flex-1'
+                        type='text'
                     />
-                    <button type='submit' className='demo-button whitespace-nowrap'>
+                    <button className='demo-button whitespace-nowrap' type='submit'>
                         Add Todo
                     </button>
                 </form>
