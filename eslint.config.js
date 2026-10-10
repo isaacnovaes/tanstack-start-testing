@@ -72,7 +72,7 @@ export default [
             'no-unused-expressions': 'off',
             '@typescript-eslint/no-unused-expressions': 'error',
             'no-use-before-define': 'off',
-            '@typescript-eslint/no-use-before-define': 'warn',
+            '@typescript-eslint/no-use-before-define': ['warn', { functions: false }],
             'no-unused-vars': 'off',
             '@typescript-eslint/no-unused-vars': [
                 'error',
