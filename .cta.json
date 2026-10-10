@@ -1,28 +1,21 @@
 {
-  "projectName": "tanstack-start-testing",
-  "mode": "file-router",
-  "typescript": true,
-  "packageManager": "bun",
-  "includeExamples": true,
-  "tailwind": true,
-  "projectPreset": "default",
-  "addOnOptions": {
-    "drizzle": {
-      "database": "postgresql"
-    }
-  },
-  "git": true,
-  "install": true,
-  "intent": true,
-  "routerOnly": false,
-  "version": 1,
-  "framework": "react",
-  "chosenAddOns": [
-    "eslint",
-    "netlify",
-    "compiler",
-    "drizzle",
-    "shadcn",
-    "tanstack-query"
-  ]
+    "projectName": "tanstack-start-testing",
+    "mode": "file-router",
+    "typescript": true,
+    "packageManager": "bun",
+    "includeExamples": true,
+    "tailwind": true,
+    "projectPreset": "default",
+    "addOnOptions": {
+        "drizzle": {
+            "database": "postgresql"
+        }
+    },
+    "git": true,
+    "install": true,
+    "intent": true,
+    "routerOnly": false,
+    "version": 1,
+    "framework": "react",
+    "chosenAddOns": ["eslint", "netlify", "compiler", "drizzle", "shadcn", "tanstack-query"]
 }
