@@ -1,46 +1,48 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { db } from '#/db/index';
+import { todos as todosSchema } from '#/db/schema';
+import { ErrorComponent, createFileRoute, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import { desc } from 'drizzle-orm';
-import { db } from '#/db/index';
-import { todos } from '#/db/schema';
 
 const getTodos = createServerFn({
     method: 'GET',
 }).handler(async () => {
     return await db.query.todos.findMany({
-        orderBy: [desc(todos.createdAt)],
+        orderBy: [desc(todosSchema.createdAt)],
     });
 });
 
 const createTodo = createServerFn({
     method: 'POST',
 })
-    .inputValidator((data: { title: string }) => data)
+    .validator((data: { title: string }) => data)
     .handler(async ({ data }) => {
-        await db.insert(todos).values({ title: data.title });
+        await db.insert(todosSchema).values({ title: data.title });
+
         return { success: true };
     });
 
 export const Route = createFileRoute('/demo/drizzle')({
     component: DemoDrizzle,
     loader: async () => await getTodos(),
+    errorComponent: ErrorComponent,
 });
 
 function DemoDrizzle() {
     const router = useRouter();
     const todos = Route.useLoaderData();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit: React.SubmitEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target as HTMLFormElement);
-        const title = formData.get('title') as string;
+        const formData = new FormData(e.target);
+        const title = formData.get('title');
 
-        if (!title) return;
+        if (!title || title instanceof File) return;
 
         try {
             await createTodo({ data: { title } });
             router.invalidate();
-            (e.target as HTMLFormElement).reset();
+            e.target.reset();
         } catch (error) {
             console.error('Failed to create todo:', error);
         }
