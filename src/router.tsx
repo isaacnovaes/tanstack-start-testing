@@ -1,4 +1,7 @@
-import { createRouter as createTanStackRouter } from '@tanstack/react-router';
+import {
+    DefaultGlobalNotFound,
+    createRouter as createTanStackRouter,
+} from '@tanstack/react-router';
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
 import { routeTree } from './routeTree.gen';
 
@@ -13,6 +16,7 @@ export function getRouter() {
         scrollRestoration: true,
         defaultPreload: 'intent',
         defaultPreloadStaleTime: 0,
+        defaultNotFoundComponent: DefaultGlobalNotFound,
     });
 
     setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient });
