@@ -28,10 +28,9 @@ This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
 If you prefer not to use Tailwind CSS:
 
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
+1. Replace the Tailwind import in `src/styles.css` with your own styles
+2. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
+3. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
 
 ## Linting & Formatting
 
@@ -204,10 +203,6 @@ function PeopleComponent() {
 ```
 
 Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
 
 # Learn More
 

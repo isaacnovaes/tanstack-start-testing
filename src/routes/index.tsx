@@ -16,16 +16,10 @@ function App() {
                     Start simple, ship quickly.
                 </h1>
                 <p className='mb-8 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg'>
-                    This base starter intentionally keeps things light: two routes, clean structure,
+                    This base starter intentionally keeps things light: one route, clean structure,
                     and the essentials you need to build from scratch.
                 </p>
                 <div className='flex flex-wrap gap-3'>
-                    <a
-                        className='rounded-full border border-[rgba(50,143,151,0.3)] bg-[rgba(79,184,178,0.14)] px-5 py-2.5 text-sm font-semibold text-[var(--lagoon-deep)] no-underline transition hover:-translate-y-0.5 hover:bg-[rgba(79,184,178,0.24)]'
-                        href='/about'
-                    >
-                        About This Starter
-                    </a>
                     <a
                         className='rounded-full border border-[rgba(23,58,64,0.2)] bg-white/50 px-5 py-2.5 text-sm font-semibold text-[var(--sea-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[rgba(23,58,64,0.35)]'
                         href='https://tanstack.com/router'
