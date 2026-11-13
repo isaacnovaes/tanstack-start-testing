@@ -1,64 +1,26 @@
 import { useEffect, useState } from 'react';
+import { applyThemeMode, readStoredMode, storeMode } from '@/lib/theme';
+import type { ThemeMode } from '@/lib/theme';
 
-type ThemeMode = 'light' | 'dark' | 'auto';
-
-function getInitialMode(): ThemeMode {
-    if (typeof window === 'undefined') {
-        return 'auto';
-    }
-
-    const stored = window.localStorage.getItem('theme');
-    if (stored === 'light' || stored === 'dark' || stored === 'auto') {
-        return stored;
-    }
-
-    return 'auto';
-}
-
-function applyThemeMode(mode: ThemeMode) {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const resolved = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
-
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(resolved);
-
-    if (mode === 'auto') {
-        document.documentElement.removeAttribute('data-theme');
-    } else {
-        document.documentElement.setAttribute('data-theme', mode);
-    }
-
-    document.documentElement.style.colorScheme = resolved;
-}
+const NEXT_MODE: Record<ThemeMode, ThemeMode> = { light: 'dark', dark: 'auto', auto: 'light' };
+const MODE_TEXT: Record<ThemeMode, string> = { light: 'Light', dark: 'Dark', auto: 'Auto' };
 
 export default function ThemeToggle() {
     const [mode, setMode] = useState<ThemeMode>('auto');
 
     useEffect(() => {
-        const initialMode = getInitialMode();
-        setMode(initialMode);
-        applyThemeMode(initialMode);
+        const storedMode = readStoredMode();
+        // The server cannot read localStorage, so the stored mode is applied after hydration.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setMode(storedMode);
+        applyThemeMode(storedMode);
     }, []);
 
-    useEffect(() => {
-        if (mode !== 'auto') {
-            return;
-        }
-
-        const media = window.matchMedia('(prefers-color-scheme: dark)');
-        const onChange = () => applyThemeMode('auto');
-
-        media.addEventListener('change', onChange);
-        return () => {
-            media.removeEventListener('change', onChange);
-        };
-    }, [mode]);
-
     function toggleMode() {
-        const nextMode: ThemeMode = mode === 'light' ? 'dark' : mode === 'dark' ? 'auto' : 'light';
+        const nextMode = NEXT_MODE[mode];
         setMode(nextMode);
         applyThemeMode(nextMode);
-        window.localStorage.setItem('theme', nextMode);
+        storeMode(nextMode);
     }
 
     const label =
@@ -69,12 +31,12 @@ export default function ThemeToggle() {
     return (
         <button
             aria-label={label}
-            className='rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-1.5 text-sm font-semibold text-[var(--sea-ink)] shadow-[0_8px_22px_rgba(30,90,72,0.08)] transition hover:-translate-y-0.5'
+            className='hover:bg-accent rounded-md border px-3 py-1.5 text-sm font-medium'
             title={label}
             type='button'
             onClick={toggleMode}
         >
-            {mode === 'auto' ? 'Auto' : mode === 'dark' ? 'Dark' : 'Light'}
+            {MODE_TEXT[mode]}
         </button>
     );
 }

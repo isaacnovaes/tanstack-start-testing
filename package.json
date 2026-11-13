@@ -2,17 +2,16 @@
     "name": "tanstack-start-testing",
     "private": true,
     "type": "module",
-    "imports": {
-        "#/*": "./src/*"
-    },
     "scripts": {
         "dev": "vite dev --port 3000",
-        "generate-routes": "tsr generate",
         "build": "vite build",
         "preview": "vite preview",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit",
         "lint": "eslint",
-        "format": "prettier --write . && eslint --fix",
-        "check": "prettier --check .",
+        "format": "oxfmt && eslint --fix",
+        "check": "oxfmt --check",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "drizzle-kit migrate",
         "db:push": "drizzle-kit push",
@@ -21,13 +20,13 @@
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.18",
-        "@tanstack/react-devtools": "0.10.13",
-        "@tanstack/react-query": "5.104.1",
-        "@tanstack/react-query-devtools": "5.104.1",
-        "@tanstack/react-router": "1.170.42",
-        "@tanstack/react-router-devtools": "1.167.2",
+        "@tanstack/react-devtools": "0.10.14",
+        "@tanstack/react-query": "5.107.1",
+        "@tanstack/react-query-devtools": "5.107.1",
+        "@tanstack/react-router": "1.170.46",
+        "@tanstack/react-router-devtools": "1.167.3",
         "@tanstack/react-router-ssr-query": "1.167.3",
-        "@tanstack/react-start": "1.168.61",
+        "@tanstack/react-start": "1.169.5",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "drizzle-kit": "^0.31.9",
@@ -38,36 +37,37 @@
         "react-dom": "^19.2.0",
         "tailwind-merge": "^3.0.2",
         "tailwindcss": "^4.1.18",
-        "tw-animate-css": "^1.3.6"
+        "tw-animate-css": "^1.3.6",
+        "zod": "^4.6.7"
     },
     "devDependencies": {
         "@netlify/vite-plugin-tanstack-start": "^1.2.15",
-        "@rolldown/plugin-babel": "^0.2.3",
-        "@tailwindcss/typography": "^0.5.16",
-        "@tanstack/devtools-vite": "0.8.5",
-        "@tanstack/eslint-config": "0.4.0",
-        "@tanstack/router-cli": "^1.132.0",
-        "@types/node": "^22.10.2",
+        "@rolldown/plugin-babel": "^0.3.1",
+        "@tanstack/devtools-vite": "0.8.6",
+        "@tanstack/eslint-config": "0.5.0",
+        "@types/eslint-plugin-jsx-a11y": "^6.10.1",
+        "@types/node": "^26.6.5",
         "@types/pg": "^8.15.6",
         "@types/react": "^19.2.0",
         "@types/react-dom": "^19.2.0",
         "@vitejs/plugin-react": "^6.0.1",
+        "@vitest/browser-playwright": "5.1.0",
         "babel-plugin-react-compiler": "^1.0.0",
-        "eslint": "^9.20.0",
+        "eslint": "^10.14.0",
         "eslint-plugin-jsx-a11y": "^6.10.2",
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.1.1",
-        "prettier": "^3.8.1",
-        "prettier-plugin-tailwindcss": "^0.8.1",
-        "tsx": "^4.21.0",
+        "jiti": "^2.7.0",
+        "oxfmt": "0.78.0",
+        "playwright": "^1.65.0",
+        "pnpm": "12.18.0",
         "typescript": "^6.0.2",
-        "vite": "^8.0.0"
+        "vite": "^8.0.0",
+        "vitest": "5.1.0",
+        "vitest-browser-react": "^2.3.0"
     },
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "esbuild",
-            "lightningcss",
-            "sharp"
-        ]
-    }
+    "engines": {
+        "node": ">=26"
+    },
+    "packageManager": "pnpm@12.18.0"
 }

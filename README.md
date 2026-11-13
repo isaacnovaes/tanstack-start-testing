@@ -1,213 +1,98 @@
-Welcome to your new TanStack Start app!
+# TanStack Start bootstrap
 
-# Getting Started
+This repository is a starting point for a new web application. It contains TanStack Start with React, a Postgres connection through Drizzle, and the tools that make sure that the code is correct. The application has one page and no demo content.
 
-To run this application:
+## Requirements
 
-```bash
-bun install
-bun --bun run dev
-```
+You need Node 26 and pnpm 12.18.0. The file `.nvmrc` selects the Node version, and the field `packageManager` in `package.json` selects the pnpm version. If pnpm is not installed on your computer, put `npx` before each command, for example `npx pnpm install`.
 
-# Building For Production
+## Setup
 
-To build this application for production:
+Do these steps in the root folder of the repository.
 
-```bash
-bun --bun run build
-```
+1. Run `nvm use` to select Node 26.
+2. Run `pnpm install` to install the packages.
+3. Run `pnpm exec playwright install chromium` to download the browser for the tests.
+4. Copy `.env.example` to `.env` and set `DATABASE_URL` to the address of a Postgres database.
+5. Run `pnpm dev` and open `http://localhost:3000`.
 
-## Styling
+## Scripts
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+| Command            | Purpose                                                              |
+| ------------------ | -------------------------------------------------------------------- |
+| `pnpm dev`         | Starts the development server on port 3000.                          |
+| `pnpm build`       | Builds the application for production.                               |
+| `pnpm preview`     | Serves the production build on your computer.                        |
+| `pnpm typecheck`   | Runs the TypeScript compiler without output files.                   |
+| `pnpm lint`        | Runs ESLint.                                                         |
+| `pnpm check`       | Makes sure that oxfmt formatted every file.                          |
+| `pnpm format`      | Formats the files with oxfmt, then runs ESLint with automatic fixes. |
+| `pnpm test`        | Runs all tests one time.                                             |
+| `pnpm test:watch`  | Runs the tests again after each change to a file.                    |
+| `pnpm db:generate` | Writes a migration file from `src/db/schema.ts`.                     |
+| `pnpm db:migrate`  | Applies the migration files to the database.                         |
+| `pnpm db:push`     | Applies the schema to the database without a migration file.         |
+| `pnpm db:studio`   | Opens Drizzle Studio, a browser tool that shows the data.            |
 
-### Removing Tailwind CSS
+Before you commit, run `pnpm typecheck`, `pnpm lint`, `pnpm check`, and `pnpm test`. Each command must exit with code 0.
 
-If you prefer not to use Tailwind CSS:
+## Folder structure
 
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
+| Path                   | Content                                                                      |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| `src/routes`           | The pages. Each file is one route. `__root.tsx` is the layout for all pages. |
+| `src/components`       | The React components.                                                        |
+| `src/lib`              | Code that the browser and the server can both use.                           |
+| `src/server`           | Code that runs on the server only, for example `env.ts`.                     |
+| `src/db`               | The Drizzle schema and the database connection.                              |
+| `src/routeTree.gen.ts` | A file that TanStack Router generates. Do not edit it.                       |
 
-## Linting & Formatting
+Import every file in `src` through the alias `@/`, for example `import { cn } from '@/lib/utils'`. The alias points to the `src` folder.
 
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
+## Routes
 
-```bash
-bun --bun run lint
-bun --bun run format
-bun --bun run check
-```
+TanStack Router makes a route from each file in `src/routes`. The development server and the build update `src/routeTree.gen.ts` when you add or remove a route file. If you put a test file in `src/routes`, start its name with `-`. The router then ignores the file.
 
-## Deploy to Netlify
+## Tests
 
-This project ships with `netlify.toml` configured for a Netlify site:
+Vitest runs two groups of tests. Files that end with `.test.ts` run in Node. Files that end with `.test.tsx` run in Chromium through Playwright, so a component test uses a real browser. Use the package `vitest-browser-react` to render a component in a test. The file `src/components/ThemeToggle.test.tsx` is an example.
 
-1. Push this repo to GitHub
-2. Visit https://app.netlify.com/start and import the repo
-3. Netlify auto-detects the build (`vite build` → `dist/client`)
-4. Open **Site settings → Environment variables** and add anything from `.env.example` that needs a real value in production
-5. Trigger the first deploy
+## Color scheme
 
-Server functions and API routes run on Netlify Functions. For lower-latency request handling, see Netlify Edge Functions: https://docs.netlify.com/edge-functions/overview.
+The page follows the color scheme of the operating system. This works without JavaScript, because the color tokens in `src/styles.css` use the CSS function `light-dark()`. The button in the header lets the user select light, dark, or automatic. The selection is stored in `localStorage`, and the class `light` or `dark` on the `html` element applies it.
 
-## Shadcn
+## Rules that ESLint enforces
 
-Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
+Two rules are specific to this repository.
+
+- `Temporal` is permitted only in `src/server` and `src/db`. Not all browsers support `Temporal`.
+- `new Date()` without arguments and `crypto.randomUUID()` are not permitted in the body of a component or a hook. Their result changes between renders. Read such a value in an effect, in an event handler, or in a loader.
+
+## Database
+
+`src/server/env.ts` reads `DATABASE_URL` and stops the server if the variable is missing. `src/db/schema.ts` contains one example table, `todos`. Replace it with the tables of your application, then run `pnpm db:generate` and `pnpm db:migrate`.
+
+## UI components
+
+The repository is prepared for shadcn/ui. To add a component, run this command:
 
 ```bash
 pnpm dlx shadcn@latest add button
 ```
 
-## Routing
+The command writes the component to `src/components/ui`. The packages that these components import are already installed.
 
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
+## Deployment to Netlify
 
-### Adding A Route
+The file `netlify.toml` contains the build configuration for Netlify.
 
-To add a new route to your application just add a new file in the `./src/routes` directory.
+1. Push the repository to GitHub.
+2. Open `https://app.netlify.com/start` and import the repository.
+3. In the Netlify project, add the environment variable `DATABASE_URL`.
+4. Start the first deploy.
 
-TanStack will automatically generate the content of the route file for you.
+Netlify runs server code in Netlify Functions. Make sure that the functions use Node 26 before you use `Temporal` in server code. To do this, log `process.version` in a server function after the first deploy. If the log shows a version lower than 26, do not use `Temporal` on the server.
 
-Now that you have two routes you can use a `Link` component to navigate between them.
+## Updates of pnpm
 
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from '@tanstack/react-router';
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to='/about'>About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
-
-export const Route = createRootRoute({
-    head: () => ({
-        meta: [
-            { charSet: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { title: 'My App' },
-        ],
-    }),
-    shellComponent: ({ children }) => (
-        <html lang='en'>
-            <head>
-                <HeadContent />
-            </head>
-            <body>
-                <header>
-                    <nav>
-                        <Link to='/'>Home</Link>
-                        <Link to='/about'>About</Link>
-                    </nav>
-                </header>
-                {children}
-                <Scripts />
-            </body>
-        </html>
-    ),
-});
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start';
-
-const getServerTime = createServerFn({
-    method: 'GET',
-}).handler(async () => {
-    return new Date().toISOString();
-});
-
-// Use in a component
-function MyComponent() {
-    const [time, setTime] = useState('');
-
-    useEffect(() => {
-        getServerTime().then(setTime);
-    }, []);
-
-    return <div>Server time: {time}</div>;
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router';
-import { json } from '@tanstack/react-start';
-
-export const Route = createFileRoute('/api/hello')({
-    server: {
-        handlers: {
-            GET: () => json({ message: 'Hello, World!' }),
-        },
-    },
-});
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router';
-
-export const Route = createFileRoute('/people')({
-    loader: async () => {
-        const response = await fetch('https://swapi.dev/api/people');
-        return response.json();
-    },
-    component: PeopleComponent,
-});
-
-function PeopleComponent() {
-    const data = Route.useLoaderData();
-    return (
-        <ul>
-            {data.results.map((person) => (
-                <li key={person.name}>{person.name}</li>
-            ))}
-        </ul>
-    );
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+The pnpm version is written in two places in `package.json`: the field `packageManager` and the entry `pnpm` in `devDependencies`. Change both to the same version. If pnpm is installed on your computer, update that installation to the same version too.

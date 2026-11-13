@@ -1,16 +1,36 @@
-//  @ts-check
-
 import { tanstackConfig } from '@tanstack/eslint-config';
+import { defineConfig } from 'eslint/config';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-export default [
+const RENDER_SCOPES = [
+    'FunctionDeclaration[id.name=/^([A-Z]|use[A-Z])/]',
+    'FunctionExpression[id.name=/^([A-Z]|use[A-Z])/]',
+    'VariableDeclarator[id.name=/^([A-Z]|use[A-Z])/] > ArrowFunctionExpression',
+    'VariableDeclarator[id.name=/^([A-Z]|use[A-Z])/] > FunctionExpression',
+];
+
+// react-hooks/purity knows only Date.now, Math.random and performance.now.
+const IMPURE_IN_RENDER = [
+    "NewExpression[callee.name='Date'][arguments.length=0]",
+    "CallExpression[callee.object.name='crypto'][callee.property.name=/^(randomUUID|getRandomValues)$/]",
+];
+
+const impureRenderSelectors = RENDER_SCOPES.flatMap((scope) =>
+    IMPURE_IN_RENDER.map((impure) => ({
+        selector: `${scope} ${impure}:not(${scope} :function ${impure})`,
+        message:
+            'Impure value during render. Read it in an effect, an event handler or a loader, or pass it in as a prop.',
+    }))
+);
+
+export default defineConfig([
     ...tanstackConfig,
     {
         rules: {
             'array-callback-return': 'warn',
-            'no-duplicate-imports': 'warn',
+            'no-duplicate-imports': ['warn', { allowSeparateTypeImports: true }],
             'no-self-compare': 'error',
             'no-template-curly-in-string': 'error',
             'no-useless-assignment': 'error',
@@ -40,10 +60,6 @@ export default [
     {
         rules: {
             '@typescript-eslint/consistent-type-exports': 'warn',
-            '@typescript-eslint/consistent-type-imports': [
-                'warn',
-                { fixStyle: 'inline-type-imports' },
-            ],
             '@typescript-eslint/no-import-type-side-effects': 'warn',
             '@typescript-eslint/method-signature-style': 'warn',
             '@typescript-eslint/promise-function-async': 'error',
@@ -59,6 +75,7 @@ export default [
             '@typescript-eslint/no-magic-numbers': [
                 'warn',
                 {
+                    ignore: [0, 1],
                     enforceConst: true,
                     detectObjects: true,
                     ignoreEnums: true,
@@ -90,7 +107,8 @@ export default [
     },
     {
         ...reactPlugin.configs.flat['jsx-runtime'],
-        settings: { react: { version: '19.2.0' } },
+        // Not 'detect': that path in eslint-plugin-react calls an API that ESLint 10 removed.
+        settings: { react: { version: '19' } },
     },
     reactHooks.configs.flat['recommended-latest'],
     jsxA11y.flatConfigs.strict,
@@ -129,6 +147,35 @@ export default [
         },
     },
     {
-        ignores: ['eslint.config.js', 'prettier.config.js'],
+        rules: {
+            'no-restricted-syntax': ['error', ...impureRenderSelectors],
+        },
     },
-];
+    {
+        rules: {
+            'no-restricted-globals': [
+                'error',
+                {
+                    name: 'Temporal',
+                    message:
+                        'Temporal is server only. Use it in src/db or src/server and call that code from here.',
+                },
+            ],
+        },
+    },
+    {
+        files: ['src/db/**', 'src/server/**'],
+        rules: {
+            'no-restricted-globals': 'off',
+        },
+    },
+    {
+        files: ['*.config.ts'],
+        rules: {
+            '@typescript-eslint/no-magic-numbers': 'off',
+        },
+    },
+    {
+        ignores: ['dist/**', '.netlify/**'],
+    },
+]);
