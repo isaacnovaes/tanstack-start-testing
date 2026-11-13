@@ -125,6 +125,6 @@ export default defineConfig([
         },
     },
     {
-        ignores: ['eslint.config.ts', 'prettier.config.ts', 'dist/**', '.netlify/**'],
+        ignores: ['eslint.config.ts', 'oxfmt.config.ts', 'dist/**', '.netlify/**'],
     },
 ]);
