@@ -18,21 +18,22 @@ Do these steps in the root folder of the repository.
 
 ## Scripts
 
-| Command            | Purpose                                                              |
-| ------------------ | -------------------------------------------------------------------- |
-| `pnpm dev`         | Starts the development server on port 3000.                          |
-| `pnpm build`       | Builds the application for production.                               |
-| `pnpm preview`     | Serves the production build on your computer.                        |
-| `pnpm typecheck`   | Runs the TypeScript compiler without output files.                   |
-| `pnpm lint`        | Runs ESLint.                                                         |
-| `pnpm check`       | Makes sure that oxfmt formatted every file.                          |
-| `pnpm format`      | Formats the files with oxfmt, then runs ESLint with automatic fixes. |
-| `pnpm test`        | Runs all tests one time.                                             |
-| `pnpm test:watch`  | Runs the tests again after each change to a file.                    |
-| `pnpm db:generate` | Writes a migration file from `src/db/schema.ts`.                     |
-| `pnpm db:migrate`  | Applies the migration files to the database.                         |
-| `pnpm db:push`     | Applies the schema to the database without a migration file.         |
-| `pnpm db:studio`   | Opens Drizzle Studio, a browser tool that shows the data.            |
+| Command            | Purpose                                                      |
+| ------------------ | ------------------------------------------------------------ |
+| `pnpm dev`         | Starts the development server on port 3000.                  |
+| `pnpm build`       | Builds the application for production.                       |
+| `pnpm preview`     | Serves the production build on your computer.                |
+| `pnpm typecheck`   | Runs the TypeScript compiler without output files.           |
+| `pnpm lint`        | Runs ESLint.                                                 |
+| `pnpm lint:fix`    | Runs ESLint and applies the automatic fixes.                 |
+| `pnpm check`       | Makes sure that oxfmt formatted every file.                  |
+| `pnpm format`      | Formats the files with oxfmt.                                |
+| `pnpm test`        | Runs all tests one time.                                     |
+| `pnpm test:watch`  | Runs the tests again after each change to a file.            |
+| `pnpm db:generate` | Writes a migration file from `src/db/schema.ts`.             |
+| `pnpm db:migrate`  | Applies the migration files to the database.                 |
+| `pnpm db:push`     | Applies the schema to the database without a migration file. |
+| `pnpm db:studio`   | Opens Drizzle Studio, a browser tool that shows the data.    |
 
 Before you commit, run `pnpm typecheck`, `pnpm lint`, `pnpm check`, and `pnpm test`. Each command must exit with code 0.
 
