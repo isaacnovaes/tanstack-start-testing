@@ -7,7 +7,6 @@
     },
     "scripts": {
         "dev": "vite dev --port 3000",
-        "generate-routes": "tsr generate",
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint",
@@ -47,7 +46,6 @@
         "@tailwindcss/typography": "^0.5.16",
         "@tanstack/devtools-vite": "0.8.5",
         "@tanstack/eslint-config": "0.4.0",
-        "@tanstack/router-cli": "^1.132.0",
         "@types/eslint-plugin-jsx-a11y": "^6.10.1",
         "@types/node": "^26.6.5",
         "@types/pg": "^8.15.6",
