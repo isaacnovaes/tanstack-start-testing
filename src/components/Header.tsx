@@ -11,7 +11,7 @@ export default function Header() {
                         to='/'
                     >
                         <span className='h-2 w-2 rounded-full bg-[linear-gradient(90deg,#56c6be,#7ed3bf)]' />
-                        TanStack Start
+                        {'TanStack Start'}
                     </Link>
                 </h2>
 

@@ -2,6 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({ component: App });
 
+const CARD_STAGGER_MS = 90;
+const CARD_BASE_DELAY_MS = 80;
+
 function App() {
     return (
         <main className='page-wrap px-4 pt-14 pb-8'>
@@ -53,7 +56,9 @@ function App() {
                     <article
                         key={title}
                         className='island-shell feature-card rise-in rounded-2xl p-5'
-                        style={{ animationDelay: `${index * 90 + 80}ms` }}
+                        style={{
+                            animationDelay: `${index * CARD_STAGGER_MS + CARD_BASE_DELAY_MS}ms`,
+                        }}
                     >
                         <h2 className='mb-2 text-base font-semibold text-[var(--sea-ink)]'>
                             {title}

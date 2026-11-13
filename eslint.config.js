@@ -10,7 +10,7 @@ export default [
     {
         rules: {
             'array-callback-return': 'warn',
-            'no-duplicate-imports': 'warn',
+            'no-duplicate-imports': ['warn', { allowSeparateTypeImports: true }],
             'no-self-compare': 'error',
             'no-template-curly-in-string': 'error',
             'no-useless-assignment': 'error',
@@ -40,10 +40,6 @@ export default [
     {
         rules: {
             '@typescript-eslint/consistent-type-exports': 'warn',
-            '@typescript-eslint/consistent-type-imports': [
-                'warn',
-                { fixStyle: 'inline-type-imports' },
-            ],
             '@typescript-eslint/no-import-type-side-effects': 'warn',
             '@typescript-eslint/method-signature-style': 'warn',
             '@typescript-eslint/promise-function-async': 'error',
@@ -59,6 +55,7 @@ export default [
             '@typescript-eslint/no-magic-numbers': [
                 'warn',
                 {
+                    ignore: [0, 1],
                     enforceConst: true,
                     detectObjects: true,
                     ignoreEnums: true,

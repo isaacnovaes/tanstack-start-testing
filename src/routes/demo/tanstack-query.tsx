@@ -9,11 +9,9 @@ function TanStackQueryDemo() {
     const { data } = useQuery({
         queryKey: ['todos'],
         queryFn: async () =>
-            Promise.resolve([
-                { id: 1, name: 'Alice' },
-                { id: 2, name: 'Bob' },
-                { id: 3, name: 'Charlie' },
-            ]),
+            Promise.resolve(
+                ['Alice', 'Bob', 'Charlie'].map((name, index) => ({ id: index + 1, name }))
+            ),
         initialData: [],
     });
 

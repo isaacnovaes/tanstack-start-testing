@@ -1,8 +1,8 @@
-import { db } from '#/db/index';
-import { todos as todosSchema } from '#/db/schema';
 import { ErrorComponent, createFileRoute, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import { desc } from 'drizzle-orm';
+import { todos as todosSchema } from '#/db/schema';
+import { db } from '#/db/index';
 
 const getTodos = createServerFn({
     method: 'GET',
