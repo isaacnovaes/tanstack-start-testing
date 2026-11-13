@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { applyThemeMode, readStoredMode, storeMode } from '../lib/theme';
-import type { ThemeMode } from '../lib/theme';
+import { applyThemeMode, readStoredMode, storeMode } from '@/lib/theme';
+import type { ThemeMode } from '@/lib/theme';
 
 const NEXT_MODE: Record<ThemeMode, ThemeMode> = { light: 'dark', dark: 'auto', auto: 'light' };
 const MODE_TEXT: Record<ThemeMode, string> = { light: 'Light', dark: 'Dark', auto: 'Auto' };

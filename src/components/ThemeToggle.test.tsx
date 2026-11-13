@@ -1,7 +1,7 @@
 import { beforeEach, expect, test } from 'vitest';
 import { render } from 'vitest-browser-react';
-import ThemeToggle from './ThemeToggle';
-import '../styles.css';
+import ThemeToggle from '@/components/ThemeToggle';
+import '@/styles.css';
 
 const getAppliedScheme = () => getComputedStyle(document.documentElement).colorScheme;
 const getStoredMode = () => window.localStorage.getItem('theme');

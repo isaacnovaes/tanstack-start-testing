@@ -2,11 +2,11 @@ import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/reac
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import { THEME_INIT_SCRIPT } from '../lib/theme';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import { THEME_INIT_SCRIPT } from '@/lib/theme';
 
-import appCss from '../styles.css?url';
+import appCss from '@/styles.css?url';
 
 import type { QueryClient } from '@tanstack/react-query';
 

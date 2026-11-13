@@ -7,7 +7,6 @@
         "module": "Preserve",
         "moduleDetection": "force",
         "paths": {
-            "#/*": ["./src/*"],
             "@/*": ["./src/*"]
         },
         "lib": ["ES2025", "ESNext.Temporal", "DOM", "DOM.Iterable"],
