@@ -4,6 +4,27 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
+const RENDER_SCOPES = [
+    'FunctionDeclaration[id.name=/^([A-Z]|use[A-Z])/]',
+    'FunctionExpression[id.name=/^([A-Z]|use[A-Z])/]',
+    'VariableDeclarator[id.name=/^([A-Z]|use[A-Z])/] > ArrowFunctionExpression',
+    'VariableDeclarator[id.name=/^([A-Z]|use[A-Z])/] > FunctionExpression',
+];
+
+// react-hooks/purity knows only Date.now, Math.random and performance.now.
+const IMPURE_IN_RENDER = [
+    "NewExpression[callee.name='Date'][arguments.length=0]",
+    "CallExpression[callee.object.name='crypto'][callee.property.name=/^(randomUUID|getRandomValues)$/]",
+];
+
+const impureRenderSelectors = RENDER_SCOPES.flatMap((scope) =>
+    IMPURE_IN_RENDER.map((impure) => ({
+        selector: `${scope} ${impure}:not(${scope} :function ${impure})`,
+        message:
+            'Impure value during render. Read it in an effect, an event handler or a loader, or pass it in as a prop.',
+    }))
+);
+
 export default defineConfig([
     ...tanstackConfig,
     {
@@ -122,6 +143,11 @@ export default defineConfig([
                     format: ['PascalCase', 'camelCase'],
                 },
             ],
+        },
+    },
+    {
+        rules: {
+            'no-restricted-syntax': ['error', ...impureRenderSelectors],
         },
     },
     {
