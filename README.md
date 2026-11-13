@@ -72,7 +72,7 @@ To add a new route to your application just add a new file in the `./src/routes`
 
 TanStack will automatically generate the content of the route file for you.
 
-Now that you have two routes you can use a `Link` component to navigate between them.
+This project starts with one route, `src/routes/index.tsx`. After you add a second one, for example `src/routes/posts.tsx`, use a `Link` component to navigate to it.
 
 ### Adding Links
 
@@ -85,10 +85,10 @@ import { Link } from '@tanstack/react-router';
 Then anywhere in your JSX you can use it like so:
 
 ```tsx
-<Link to='/about'>About</Link>
+<Link to='/posts'>Posts</Link>
 ```
 
-This will create a link that will navigate to the `/about` route.
+This will create a link that will navigate to the `/posts` route.
 
 More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
 
@@ -99,7 +99,7 @@ In the File Based Routing setup the layout is located in `src/routes/__root.tsx`
 Here is an example layout that includes a header:
 
 ```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
+import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-router';
 
 export const Route = createRootRoute({
     head: () => ({
@@ -118,7 +118,7 @@ export const Route = createRootRoute({
                 <header>
                     <nav>
                         <Link to='/'>Home</Link>
-                        <Link to='/about'>About</Link>
+                        <Link to='/posts'>Posts</Link>
                     </nav>
                 </header>
                 {children}
