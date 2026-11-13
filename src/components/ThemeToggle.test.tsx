@@ -1,13 +1,14 @@
 import { beforeEach, expect, test } from 'vitest';
 import { render } from 'vitest-browser-react';
-import ThemeToggle from '#/components/ThemeToggle';
+import ThemeToggle from './ThemeToggle';
+import '../styles.css';
 
-const getAppliedScheme = () => document.documentElement.style.colorScheme;
+const getAppliedScheme = () => getComputedStyle(document.documentElement).colorScheme;
 const getStoredMode = () => window.localStorage.getItem('theme');
 
 beforeEach(() => {
     window.localStorage.clear();
-    document.documentElement.removeAttribute('style');
+    document.documentElement.classList.remove('light', 'dark');
 });
 
 test('each click applies the next mode and stores it', async () => {
@@ -24,6 +25,7 @@ test('each click applies the next mode and stores it', async () => {
 
     await toggle.click();
     expect(getStoredMode()).toBe('auto');
+    expect(getAppliedScheme()).toBe('light dark');
 });
 
 test('applies the stored mode when it mounts', async () => {

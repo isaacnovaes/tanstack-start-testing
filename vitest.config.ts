@@ -1,11 +1,12 @@
 import babel from '@rolldown/plugin-babel';
+import tailwindcss from '@tailwindcss/vite';
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
     resolve: { tsconfigPaths: true },
-    plugins: [viteReact(), babel({ presets: [reactCompilerPreset()] })],
+    plugins: [tailwindcss(), viteReact(), babel({ presets: [reactCompilerPreset()] })],
     test: {
         projects: [
             {
