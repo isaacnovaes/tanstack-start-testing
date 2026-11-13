@@ -1,7 +1,6 @@
-//  @ts-check
+import type { Config } from 'prettier';
 
-/** @type {import('prettier').Config} */
-const config = {
+const config: Config = {
     tabWidth: 4,
     trailingComma: 'es5',
     singleQuote: true,

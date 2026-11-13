@@ -1,11 +1,10 @@
-//  @ts-check
-
 import { tanstackConfig } from '@tanstack/eslint-config';
+import { defineConfig } from 'eslint/config';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-export default [
+export default defineConfig([
     ...tanstackConfig,
     {
         rules: {
@@ -126,6 +125,6 @@ export default [
         },
     },
     {
-        ignores: ['eslint.config.js', 'prettier.config.js', 'dist/**', '.netlify/**'],
+        ignores: ['eslint.config.ts', 'prettier.config.ts', 'dist/**', '.netlify/**'],
     },
-];
+]);
