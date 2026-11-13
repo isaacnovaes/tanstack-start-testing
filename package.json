@@ -9,6 +9,8 @@
         "dev": "vite dev --port 3000",
         "build": "vite build",
         "preview": "vite preview",
+        "test": "vitest run",
+        "test:watch": "vitest",
         "lint": "eslint",
         "format": "oxfmt && eslint --fix",
         "check": "oxfmt --check",
@@ -52,6 +54,7 @@
         "@types/react": "^19.2.0",
         "@types/react-dom": "^19.2.0",
         "@vitejs/plugin-react": "^6.0.1",
+        "@vitest/browser-playwright": "5.1.0",
         "babel-plugin-react-compiler": "^1.0.0",
         "eslint": "^9.20.0",
         "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -59,10 +62,13 @@
         "eslint-plugin-react-hooks": "^7.1.1",
         "jiti": "^2.7.0",
         "oxfmt": "0.78.0",
+        "playwright": "^1.65.0",
         "pnpm": "12.18.0",
         "tsx": "^4.21.0",
         "typescript": "^6.0.2",
-        "vite": "^8.0.0"
+        "vite": "^8.0.0",
+        "vitest": "5.1.0",
+        "vitest-browser-react": "^2.3.0"
     },
     "engines": {
         "node": ">=26"
