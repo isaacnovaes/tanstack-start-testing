@@ -107,7 +107,8 @@ export default defineConfig([
     },
     {
         ...reactPlugin.configs.flat['jsx-runtime'],
-        settings: { react: { version: '19.2.0' } },
+        // Not 'detect': that path in eslint-plugin-react calls an API that ESLint 10 removed.
+        settings: { react: { version: '19' } },
     },
     reactHooks.configs.flat['recommended-latest'],
     jsxA11y.flatConfigs.strict,
@@ -169,6 +170,12 @@ export default defineConfig([
         },
     },
     {
-        ignores: ['eslint.config.ts', 'oxfmt.config.ts', 'dist/**', '.netlify/**'],
+        files: ['*.config.ts'],
+        rules: {
+            '@typescript-eslint/no-magic-numbers': 'off',
+        },
+    },
+    {
+        ignores: ['dist/**', '.netlify/**'],
     },
 ]);
