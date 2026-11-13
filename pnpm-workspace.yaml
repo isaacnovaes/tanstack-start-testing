@@ -3,3 +3,11 @@ registry: https://registry.npmjs.org/
 allowBuilds:
     esbuild: true
     pnpm: true
+
+permissions:
+    '@tanstack/devtools-vite':
+        skills: true
+    '@tanstack/react-router':
+        skills: true
+    '@tanstack/react-start':
+        skills: true
