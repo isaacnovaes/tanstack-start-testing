@@ -125,6 +125,24 @@ export default defineConfig([
         },
     },
     {
+        rules: {
+            'no-restricted-globals': [
+                'error',
+                {
+                    name: 'Temporal',
+                    message:
+                        'Temporal is server only. Use it in src/db or src/server and call that code from here.',
+                },
+            ],
+        },
+    },
+    {
+        files: ['src/db/**', 'src/server/**'],
+        rules: {
+            'no-restricted-globals': 'off',
+        },
+    },
+    {
         ignores: ['eslint.config.ts', 'oxfmt.config.ts', 'dist/**', '.netlify/**'],
     },
 ]);
