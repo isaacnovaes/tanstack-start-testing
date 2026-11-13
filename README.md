@@ -2,11 +2,14 @@ Welcome to your new TanStack Start app!
 
 # Getting Started
 
+This project needs Node 26 (`nvm use`) and pnpm. Without a global pnpm, put `npx` in
+front of each command, for example `npx pnpm install`.
+
 To run this application:
 
 ```bash
-npx pnpm@12.18.0 install
-npx pnpm run dev
+pnpm install
+pnpm dev
 ```
 
 # Building For Production
@@ -14,7 +17,7 @@ npx pnpm run dev
 To build this application for production:
 
 ```bash
-npx pnpm run build
+pnpm build
 ```
 
 ## Styling
@@ -35,9 +38,9 @@ If you prefer not to use Tailwind CSS:
 This project uses [eslint](https://eslint.org/) and [oxfmt](https://oxc.rs/docs/guide/usage/formatter) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
 
 ```bash
-npx pnpm run lint
-npx pnpm run format
-npx pnpm run check
+pnpm lint
+pnpm format
+pnpm check
 ```
 
 ## Deploy to Netlify
@@ -57,7 +60,7 @@ Server functions and API routes run on Netlify Functions. For lower-latency requ
 Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 
 ```bash
-npx pnpm dlx shadcn@latest add button
+pnpm dlx shadcn@latest add button
 ```
 
 ## Routing

@@ -103,13 +103,13 @@ function DemoDrizzle() {
                                 Configure your <code>DATABASE_URL</code> in .env.local
                             </li>
                             <li>
-                                Run: <code>npx pnpm db:generate</code>
+                                Run: <code>pnpm db:generate</code>
                             </li>
                             <li>
-                                Run: <code>npx pnpm db:migrate</code>
+                                Run: <code>pnpm db:migrate</code>
                             </li>
                             <li>
-                                Optional: <code>npx pnpm db:studio</code>
+                                Optional: <code>pnpm db:studio</code>
                             </li>
                         </ol>
                     </div>
