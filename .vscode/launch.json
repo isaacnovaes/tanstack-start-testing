@@ -8,7 +8,7 @@
             "type": "node-terminal",
             "name": "debug server-side",
             "request": "launch",
-            "command": "bun run dev",
+            "command": "npx pnpm run dev",
             "cwd": "${workspaceFolder}"
         },
         {

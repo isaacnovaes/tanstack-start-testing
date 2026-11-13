@@ -5,8 +5,8 @@ Welcome to your new TanStack Start app!
 To run this application:
 
 ```bash
-bun install
-bun run dev
+npx pnpm@12.18.0 install
+npx pnpm run dev
 ```
 
 # Building For Production
@@ -14,7 +14,7 @@ bun run dev
 To build this application for production:
 
 ```bash
-bun run build
+npx pnpm run build
 ```
 
 ## Styling
@@ -35,9 +35,9 @@ If you prefer not to use Tailwind CSS:
 This project uses [eslint](https://eslint.org/) and [oxfmt](https://oxc.rs/docs/guide/usage/formatter) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
 
 ```bash
-bun run lint
-bun run format
-bun run check
+npx pnpm run lint
+npx pnpm run format
+npx pnpm run check
 ```
 
 ## Deploy to Netlify
@@ -57,7 +57,7 @@ Server functions and API routes run on Netlify Functions. For lower-latency requ
 Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 
 ```bash
-bunx shadcn@latest add button
+npx pnpm dlx shadcn@latest add button
 ```
 
 ## Routing

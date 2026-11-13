@@ -1,0 +1,5 @@
+registry: https://registry.npmjs.org/
+
+allowBuilds:
+    esbuild: true
+    pnpm: true
