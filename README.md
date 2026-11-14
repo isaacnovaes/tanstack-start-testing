@@ -64,10 +64,23 @@ The page follows the color scheme of the operating system. This works without Ja
 
 ## Rules that ESLint enforces
 
-Two rules are specific to this repository.
+The configuration in `eslint.config.ts` adds these sets of rules to the TanStack configuration:
+
+- The `strictTypeChecked` and `stylisticTypeChecked` presets of typescript-eslint. They use type information. For example, they report a promise that no code handles.
+- `eslint-plugin-sonarjs`, for code that is probably a bug.
+- `eslint-plugin-no-secrets`, for strings that look like a key or a token.
+- Three plugins for React code. `eslint-plugin-react-hooks` has the rules of the React Compiler. `@eslint-react` has correctness rules. `eslint-plugin-react` has style rules. Where two plugins have the same rule, one of the two is off.
+
+These rules are the ones that you see most frequently:
 
 - `Temporal` is permitted only in `src/server` and `src/db`. Not all browsers support `Temporal`.
-- `new Date()` without arguments and `crypto.randomUUID()` are not permitted in the body of a component or a hook. Their result changes between renders. Read such a value in an effect, in an event handler, or in a loader.
+- A value that changes between renders is not permitted in the body of a component or a hook. Examples are `new Date()` without arguments, `Date.now()`, `Math.random()`, and `crypto.randomUUID()`. Read such a value in an effect, in an event handler, or in a loader.
+- A condition must be a boolean. Write `text !== undefined`, not `text`.
+- Write `condition ? <Item /> : null` in JSX, not `condition && <Item />`.
+- Write `Item[]`, not `Array<Item>`.
+- A function with more than 80 lines causes a warning.
+
+ESLint does not examine `src/components/ui`, because the shadcn tool generates the files in that directory.
 
 ## Database
 

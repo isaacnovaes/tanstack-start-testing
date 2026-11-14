@@ -1,4 +1,9 @@
-import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
+import {
+    HeadContent,
+    ScriptOnce,
+    Scripts,
+    createRootRouteWithContext,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
@@ -51,7 +56,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
     return (
         <html lang='en' suppressHydrationWarning>
             <head>
-                <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+                <ScriptOnce>{THEME_INIT_SCRIPT}</ScriptOnce>
                 <HeadContent />
             </head>
             <body className='flex min-h-dvh flex-col font-sans antialiased'>
