@@ -48,7 +48,9 @@ Before you commit, run `pnpm typecheck`, `pnpm lint`, `pnpm check`, and `pnpm te
 | `src/db`               | The Drizzle schema and the database connection.                              |
 | `src/routeTree.gen.ts` | A file that TanStack Router generates. Do not edit it.                       |
 
-Import every file in `src` through the alias `@/`, for example `import { cn } from '@/lib/utils'`. The alias points to the `src` folder.
+Import a file from another folder of `src` through the alias `#/`, and write the file name with its extension, for example `import Header from '#/components/Header.tsx'`. The `imports` field of `package.json` defines the alias. Node, TypeScript, Vite and Vitest all read that field, so the alias has one definition. Node does not guess a file extension, which is why you must write it. `pnpm lint:fix` adds a missing extension.
+
+The shadcn tool reads the same field. A component that it adds imports other components with the extension, for example `#/components/ui/button.tsx`.
 
 ## Routes
 
