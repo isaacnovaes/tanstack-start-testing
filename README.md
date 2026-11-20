@@ -96,7 +96,7 @@ The repository is prepared for shadcn/ui. To add a component, run this command:
 pnpm dlx shadcn@latest add button
 ```
 
-The command writes the component to `src/components/ui`. The packages that these components import are already installed.
+The command writes the component to `src/components/ui`, and it installs the packages that the component imports. Two of them are `radix-ui` and `cn`, a function that merges class names.
 
 ## Deployment to Netlify
 
