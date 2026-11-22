@@ -48,7 +48,9 @@ Before you commit, run `pnpm typecheck`, `pnpm lint`, `pnpm check`, and `pnpm te
 | `src/db`               | The Drizzle schema and the database connection.                              |
 | `src/routeTree.gen.ts` | A file that TanStack Router generates. Do not edit it.                       |
 
-Import every file in `src` through the alias `@/`, for example `import { cn } from '@/lib/utils'`. The alias points to the `src` folder.
+Import a file from another folder of `src` through the alias `#/`, and write the file name with its extension, for example `import Header from '#/components/Header.tsx'`. The `imports` field of `package.json` defines the alias. Node, TypeScript, Vite and Vitest all read that field, so the alias has one definition. Node does not guess a file extension, which is why you must write it. `pnpm lint:fix` adds a missing extension.
+
+The shadcn tool reads the same field. A component that it adds imports other components with the extension, for example `#/components/ui/button.tsx`.
 
 ## Routes
 
@@ -94,7 +96,7 @@ The repository is prepared for shadcn/ui. To add a component, run this command:
 pnpm dlx shadcn@latest add button
 ```
 
-The command writes the component to `src/components/ui`. The packages that these components import are already installed.
+The command writes the component to `src/components/ui`, and it installs the packages that the component imports. Two of them are `radix-ui` and `cn`, a function that merges class names.
 
 ## Deployment to Netlify
 

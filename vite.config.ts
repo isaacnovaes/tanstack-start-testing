@@ -8,7 +8,6 @@ import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-    resolve: { tsconfigPaths: true },
     plugins: [
         devtools(),
         netlify({ dev: { edgeFunctions: { enabled: false } } }),

@@ -3,6 +3,8 @@ import { tanstackConfig } from '@tanstack/eslint-config';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import pluginRouter from '@tanstack/eslint-plugin-router';
 import { defineConfig } from 'eslint/config';
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
+import { createNodeResolver, importX } from 'eslint-plugin-import-x';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import noSecrets from 'eslint-plugin-no-secrets';
 import reactPlugin from 'eslint-plugin-react';
@@ -223,6 +225,49 @@ export default defineConfig([
     {
         plugins: { 'no-secrets': noSecrets },
         rules: { 'no-secrets/no-secrets': 'error' },
+    },
+    {
+        // The TypeScript setup that eslint-plugin-import-x documents: its settings for TypeScript
+        // files, and the resolver that reads tsconfig.json and package.json, so that the rules
+        // follow the #/ alias. Only the settings of the preset are used: its rule has the prefix
+        // import-x, and the TanStack config registers the plugin as "import".
+        settings: {
+            ...importX.flatConfigs.typescript.settings,
+            'import-x/resolver-next': [createTypeScriptImportResolver(), createNodeResolver()],
+        },
+        rules: {
+            // A cycle inside an installed package is not ours to fix, and following the
+            // packages costs a third of the lint time.
+            'import/no-cycle': ['error', { ignoreExternal: true }],
+            // One way to write an import of a project file: the full file name. Node needs it
+            // for the #/ alias of package.json.
+            'import/extensions': [
+                'error',
+                'always',
+                {
+                    ignorePackages: true,
+                    checkTypeImports: true,
+                    fix: true,
+                },
+            ],
+        },
+    },
+    {
+        // A file in src reaches another folder through the #/ alias, not through ../
+        files: ['src/**'],
+        rules: {
+            'no-restricted-imports': [
+                'error',
+                {
+                    patterns: [
+                        {
+                            regex: String.raw`^\.\./`,
+                            message: 'Use the #/ alias to reach another folder.',
+                        },
+                    ],
+                },
+            ],
+        },
     },
     {
         files: ['*.config.ts'],
